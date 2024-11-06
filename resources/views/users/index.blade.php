@@ -8,7 +8,7 @@
 
         <h1 class="mb-3">Users</h1>
 
-        <a href="#" class="btn btn-primary mb-4">Create</a>
+        <a href="{{ route('role.create') }}" class="btn btn-primary mb-4">Create</a>
         <table class="table">
             <thead>
               <tr>
@@ -23,21 +23,23 @@
             </thead>
             <tbody>
                 @foreach ($roles as $role)
-                    <tr>
-                        <th>{{$role->id}}</th>
-                        <th>{{$role->name}}</th>
-                        <th>{{$role->email}}</th>
-                        <th>{{$role->password}}</th>
-                        <th>{{$role->role}}</th>
-                        <th>
-                            <form action="{{ route('role.destroy', $role->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                             <th><a href="#" class="btn btn-warning">Update</a>
-                            </th>
-                            </tr>
+                <tr>
+                    <th>{{ $role->id }}</th>
+                    <th>{{ $role->name }}</th>
+                    <th>{{ $role->email }}</th>
+                    <th>{{ $role->password }}</th>
+                    <th>{{ $role->role }}</th>
+                    <th>
+                        <form action="{{ route('role.destroy', $role->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </th>
+                    <th>
+                        <a href="{{ route('role.edit', $role->id) }}" class="btn btn-warning">Update</a>
+                    </th>
+                </tr>
                 @endforeach
             </tbody>
           </table>

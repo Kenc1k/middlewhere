@@ -124,7 +124,7 @@
             <ul class="nav nav-treeview">
         
 
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="/post" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
@@ -142,7 +142,7 @@
                 <span class="right badge badge-danger"></span>
               </p>
             </a>
-          </li>
+          </li> --}}
           <li class="nav-item">
             <a href="{{route('loginPage')}}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -156,7 +156,7 @@
             <a href="{{route('registerPage')}}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Regirter
+                Register
                 <span class="right badge badge-danger"></span>
               </p>
             </a>
@@ -166,6 +166,15 @@
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Users
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/logout" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Logout
                 <span class="right badge badge-danger"></span>
               </p>
             </a>

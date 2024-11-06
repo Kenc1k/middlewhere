@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Role;
+use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
@@ -22,16 +23,29 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreRoleRequest $request)
+    
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:roles,email',
+            'password' => 'required|min:6',
+            'role' => 'required',  // Add this line to validate the role field
+        ]);
+    
+        Role::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,  // Save the role field in the database
+        ]);
+    
+        return redirect('/users')->with('success', 'Role created successfully.');
     }
+    
+    
 
     /**
      * Display the specified resource.
@@ -44,18 +58,35 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Role $role)
+    public function edit($id)
     {
-        //
+        $role = Role::findOrFail($id);
+        return view('users.edit', compact('role'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateRoleRequest $request, Role $role)
+    
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:roles,email,'.$id,
+            'password' => 'nullable|min:6',
+            'role' => 'required'
+        ]);
+    
+        $role = Role::findOrFail($id);
+        $role->name = $request->name;
+        $role->email = $request->email;
+        $role->role = $request->role;
+    
+        if ($request->password) {
+            $role->password = bcrypt($request->password);
+        }
+    
+        $role->save();
+    
+        return redirect('/')->with('success', 'Role updated successfully.');
     }
+    
 
     /**
      * Remove the specified resource from storage.
